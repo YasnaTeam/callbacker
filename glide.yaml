@@ -1,0 +1,5 @@
+package: github.com/YasnaTeam/callbacker
+import:
+- package: github.com/sirupsen/logrus
+  version: ^1.0.6
+- package: github.com/t-tomalak/logrus-easy-formatter
