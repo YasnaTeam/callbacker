@@ -1,9 +1,9 @@
-hash: 5da5bda7309b72da19d6891e57b0b1099260197175991f22ff9ae98a8dbc9e59
-updated: 2018-07-22T22:52:31.768431765+04:30
+hash: 9319a93152e45f56221994f841d02aee41728a1164f74e6bdc8af13e35918081
+updated: 2018-07-23T13:19:31.276681454+04:30
 imports:
+- name: github.com/gorilla/mux
+  version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
 - name: github.com/sirupsen/logrus
-  version: 3e01752db0189b9157070a0e1668a620f9a85da2
-- name: github.com/Sirupsen/logrus
   version: 3e01752db0189b9157070a0e1668a620f9a85da2
 - name: github.com/t-tomalak/logrus-easy-formatter
   version: ca9ce6b071ebe774296872e9dff2009b87ddcbb0

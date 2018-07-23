@@ -3,3 +3,5 @@ import:
 - package: github.com/sirupsen/logrus
   version: ^1.0.6
 - package: github.com/t-tomalak/logrus-easy-formatter
+- package: github.com/gorilla/mux
+  version: ^1.6.2
