@@ -1,14 +1,18 @@
-hash: 9319a93152e45f56221994f841d02aee41728a1164f74e6bdc8af13e35918081
-updated: 2018-07-23T13:19:31.276681454+04:30
+hash: 3443f615fb1059ca945d7c275cc4983eb33cb1279e996293331f06b5448bfb5a
+updated: 2018-07-23T20:58:40.690026298+04:30
 imports:
+- name: github.com/gorilla/context
+  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
 - name: github.com/gorilla/mux
   version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
+- name: github.com/satori/go.uuid
+  version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/sirupsen/logrus
   version: 3e01752db0189b9157070a0e1668a620f9a85da2
 - name: github.com/t-tomalak/logrus-easy-formatter
   version: ca9ce6b071ebe774296872e9dff2009b87ddcbb0
 - name: golang.org/x/crypto
-  version: a2144134853fc9a27a7b1e3eb4f19f1a76df13c9
+  version: a521dfce2584b08efb1ec3eab94c05254dcf8f09
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
