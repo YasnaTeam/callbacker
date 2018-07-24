@@ -2,10 +2,19 @@ package storage
 
 type MemoryTable struct {
 	max uint
-	table map[string]string
+	table map[string]interface{}
 }
 
-func (m *MemoryTable) Get(route string) (string, error) {
+func NewMemoryTable(max uint) *MemoryTable {
+	table := make(map[string]interface{})
+
+	return &MemoryTable{
+		max,
+		table,
+	}
+}
+
+func (m *MemoryTable) Get(route string) (interface{}, error) {
 	if value, ok := m.table[route]; ok {
 		return value, nil
 	}
@@ -13,7 +22,7 @@ func (m *MemoryTable) Get(route string) (string, error) {
 	return "", &RouteError{route}
 }
 
-func (m *MemoryTable) Set(route, value string) error {
+func (m *MemoryTable) Set(route string, value interface{}) error {
 	if m.CanSet() {
 		m.table[route] = value
 
@@ -23,8 +32,16 @@ func (m *MemoryTable) Set(route, value string) error {
 	return &CanNotSetError{"You has reached to the limit."}
 }
 
-func (m *MemoryTable) Unset(route string) error {
+func (m *MemoryTable) Has(route string) bool {
 	if _, ok := m.table[route]; ok {
+		return true
+	}
+
+	return false
+}
+
+func (m *MemoryTable) Unset(route string) error {
+	if m.Has(route) {
 		delete(m.table, route)
 
 		return nil
