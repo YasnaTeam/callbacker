@@ -12,6 +12,13 @@ func registerCallback(conn net.Conn, route, domain string) {
 	strCallback := domain + "/" + uuid
 	log.Debug("Callback url is: ", strCallback)
 
-	routes.Set(uuid, strCallback)
+	username, err := connections.GetKey(conn)
+
+	if err != nil {
+		log.Debug("`" + username + "` is not available now.")
+		return
+	}
+
+	routes.Set(uuid, username)
 	conn.Write([]byte(strCallback))
 }

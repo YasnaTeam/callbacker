@@ -68,6 +68,12 @@ func getMessageFromClient(conn net.Conn, domain string) {
 		if err != nil {
 			conn.Close()
 			log.Warn("Could not receive packet...")
+			username, err := connections.GetKey(conn)
+			if err == nil {
+				log.Debug("Connection of `" + username + "` has been closed.")
+				connections.Set(username, nil)
+			}
+			return
 		}
 
 		var packetStr string = string(packet)
