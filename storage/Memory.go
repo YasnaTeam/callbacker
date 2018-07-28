@@ -57,3 +57,13 @@ func (m *MemoryTable) CanSet() bool {
 
 	return false
 }
+
+func (m *MemoryTable) GetKey(value interface{}) (string, error) {
+	for i, v := range m.table {
+		if v == value {
+			return i, nil
+		}
+	}
+
+	return "", &RouteError{"Not key has this value."}
+}
