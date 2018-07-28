@@ -62,7 +62,7 @@ func getCommands(conn net.Conn) {
 	scanner.Scan()
 	command = scanner.Text()
 
-	for command != "x" {
+	for command != "x" && command != "exit" {
 
 		switch command {
 		case "a", "add":
@@ -121,4 +121,5 @@ func sendCommandToServer(conn net.Conn, route string) (string, error) {
 func printHelp() {
 	fmt.Println("Use this commands:")
 	fmt.Println("    a (or add)\tAdd a route")
+	fmt.Println("    x (or exit)\tExit from program")
 }
