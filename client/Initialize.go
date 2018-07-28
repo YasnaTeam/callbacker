@@ -32,5 +32,6 @@ func Initialize(port uint, logger *logrus.Logger) {
 
 	registerUserOnServer(conn)
 
+	go doCallbackCall(conn)
 	getCommands(conn)
 }
