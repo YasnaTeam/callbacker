@@ -14,17 +14,17 @@ func NewMemoryTable(max uint) *MemoryTable {
 	}
 }
 
-func (m *MemoryTable) Get(route string) (interface{}, error) {
-	if value, ok := m.table[route]; ok {
+func (m *MemoryTable) Get(key string) (interface{}, error) {
+	if value, ok := m.table[key]; ok {
 		return value, nil
 	}
 
-	return "", &RouteError{route}
+	return "", &RouteError{key}
 }
 
-func (m *MemoryTable) Set(route string, value interface{}) error {
+func (m *MemoryTable) Set(key string, value interface{}) error {
 	if m.CanSet() {
-		m.table[route] = value
+		m.table[key] = value
 
 		return nil
 	}
@@ -32,22 +32,22 @@ func (m *MemoryTable) Set(route string, value interface{}) error {
 	return &CanNotSetError{"You has reached to the limit."}
 }
 
-func (m *MemoryTable) Has(route string) bool {
-	if _, ok := m.table[route]; ok {
+func (m *MemoryTable) Has(key string) bool {
+	if _, ok := m.table[key]; ok {
 		return true
 	}
 
 	return false
 }
 
-func (m *MemoryTable) Unset(route string) error {
-	if m.Has(route) {
-		delete(m.table, route)
+func (m *MemoryTable) Unset(key string) error {
+	if m.Has(key) {
+		delete(m.table, key)
 
 		return nil
 	}
 
-	return &RouteError{route}
+	return &RouteError{key}
 }
 
 func (m *MemoryTable) CanSet() bool {
