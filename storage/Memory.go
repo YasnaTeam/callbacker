@@ -51,7 +51,7 @@ func (m *MemoryTable) Unset(key string) error {
 }
 
 func (m *MemoryTable) CanSet() bool {
-	if m.max > 0 && len(m.table) < int(m.max) {
+	if m.max <= 0 || len(m.table) < int(m.max) {
 		return true
 	}
 
