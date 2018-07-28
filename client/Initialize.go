@@ -7,14 +7,18 @@ import (
 	"fmt"
 	"os"
 	"bufio"
+	"github.com/YasnaTeam/callbacker/storage"
 )
 
 var log *logrus.Logger
 var username string
+var routes storage.RouteTable
 
 func Initialize(port uint, logger *logrus.Logger) {
 	log = logger
 	log.Info("Client started...")
+
+	routes = storage.NewMemoryTable(0)
 
 	var serverAddress string = "127.0.0.1:" + strconv.Itoa(int(port))
 	tcpAddr, err := net.ResolveTCPAddr("tcp", serverAddress)
@@ -71,8 +75,8 @@ func getCommands(conn net.Conn) {
 			if err != nil {
 				log.Fatal("On sending commands to server, an error occurred! " + err.Error())
 			}
-
-			fmt.Println("Callback url: " + result)
+			log.Debug("Callback url: " + result)
+			addCallbackRunner(result, route)
 		default:
 			printHelp()
 		}
@@ -101,7 +105,7 @@ func addCommand(scanner *bufio.Scanner) string {
 func sendCommandToServer(conn net.Conn, route string) (string, error) {
 	log.Debug("Prepare send `" + route + "` as a route...")
 	command := "1:" + username + ":" + route
-	var callback []byte
+	var callback = make([]byte, 512)
 
 	bs, err := conn.Write([]byte(command))
 	if err != nil {
@@ -116,6 +120,10 @@ func sendCommandToServer(conn net.Conn, route string) (string, error) {
 	log.Debug("A response received (" + strconv.Itoa(br) + ") from the server...")
 
 	return string(callback), nil
+}
+
+func addCallbackRunner(result, route string) {
+	routes.Set(result, route)
 }
 
 func printHelp() {
