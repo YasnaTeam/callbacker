@@ -6,24 +6,27 @@ type RouteTable interface {
 	Get(key string) (interface{}, error)
 
 	// Set request information of a request. Route is the endpoint which received to
-	// the server and value is information of client which registered this route
-	Set(route string, value interface{}) error
+	// the server and value is information of client which registered this key
+	Set(key string, value interface{}) error
 
-	Has(route string) bool
+	Has(key string) bool
 
-	// Unset a route
-	Unset(route string) error
+	// Unset a key
+	Unset(key string) error
 
-	// Indicate user can set more route or not
+	// Indicate user can set more key or not
 	CanSet() bool
+
+	// Return first key which has the value
+	GetKey(value interface{}) (string, error)
 }
 
 type RouteError struct {
-	route string
+	key string
 }
 
 func (e *RouteError) Error() string {
-	return "Route " + e.route + " not found!"
+	return "Route " + e.key + " not found!"
 }
 
 type CanNotSetError struct {
