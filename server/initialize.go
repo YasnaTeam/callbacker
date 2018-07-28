@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"net"
 	"github.com/YasnaTeam/callbacker/storage"
-	uuid2 "github.com/satori/go.uuid"
 )
 
 var log *logrus.Logger
@@ -82,24 +81,4 @@ func getMessageFromClient(conn net.Conn, domain string) {
 			registerCallback(conn, packetStr[2:], domain)
 		}
 	}
-}
-
-func registerUserConnection(conn net.Conn, username string) {
-	log.Debug("Trying to add `" + username + "` as a user...")
-	connections.Set(username, conn)
-
-	if connections.Has(username) {
-		log.Debug("`" + username + "` connection added successfully.")
-	}
-}
-
-func registerCallback(conn net.Conn, route, domain string) {
-	log.Debug("Trying to add `" + route + "` as a route...")
-
-	uuid := uuid2.NewV4().String()
-	strCallback := domain + "/" + uuid
-	log.Debug("Callback url is: ", strCallback)
-
-	routes.Set(uuid, strCallback)
-	conn.Write([]byte(strCallback))
 }
