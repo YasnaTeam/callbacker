@@ -1,6 +1,8 @@
 package client
 
-import "net"
+import (
+	"net"
+)
 
 func doCallbackCall(conn net.Conn) {
 
