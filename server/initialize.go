@@ -6,8 +6,8 @@ import (
 )
 
 var log *logrus.Logger
-var routes storage.RouteTable
-var connections storage.RouteTable
+var routes storage.RouteTable // map routes to users
+var connections storage.RouteTable // map users to connections
 
 func Initialize(address string, port uint, serverUrl string, logger *logrus.Logger) {
 	log = logger
