@@ -22,12 +22,7 @@ func getUserCommandsAndSendThemToServer(conn net.Conn) {
 		switch command {
 		case "a", "add":
 			route := callbackCommand(scanner)
-			result, err := syncCallbackInformationWithServer(conn, route)
-			if err != nil {
-				log.Fatal("On sending commands to server, an error occurred! " + err.Error())
-			}
-			log.Debug("Callback url: " + result)
-			addCallbackRunner(result, route)
+			syncCallbackInformationWithServer(conn, route)
 		default:
 			printHelp()
 		}

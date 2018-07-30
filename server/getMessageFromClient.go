@@ -1,10 +1,14 @@
 package server
 
-import "net"
+import (
+	"net"
+	"github.com/YasnaTeam/callbacker/common"
+	"fmt"
+)
 
 func getMessageFromClient(conn net.Conn, domain string) {
 	for {
-		var packet []byte = make([]byte, 512)
+		var packet []byte = make([]byte, 1024)
 		_, err := conn.Read(packet)
 		if err != nil {
 			conn.Close()
@@ -17,15 +21,19 @@ func getMessageFromClient(conn net.Conn, domain string) {
 			return
 		}
 
-		var packetStr string = string(packet)
-		var packetType = string(packetStr[0])
-		log.Debug("Received packet: " + packetStr)
+		log.Debug("Received packet: " + string(packet))
+		packetStruct, err := common.GetTransferableDataFromByte(packet)
+		fmt.Println(packetStruct)
+		if err != nil {
+			log.Errorf("There are some errors on receiving packet from client: `%s`", err)
+			return
+		}
 
-		switch packetType {
-		case "0":
-			registerUserConnection(conn, packetStr[2:])
-		case "1":
-			registerCallback(conn, packetStr[2:], domain)
+		switch packetStruct.Type {
+		case "register_user":
+			registerUserConnection(conn, packetStruct.Data.(string))
+		case "add_callback":
+			registerCallback(conn, packetStruct.Data.(string), domain)
 		}
 	}
 }

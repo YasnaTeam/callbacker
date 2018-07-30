@@ -3,24 +3,25 @@ package client
 import (
 	"net"
 	"strconv"
+	"github.com/YasnaTeam/callbacker/common"
 )
 
-func syncCallbackInformationWithServer(conn net.Conn, route string) (string, error) {
+func syncCallbackInformationWithServer(conn net.Conn, route string) error {
 	log.Debug("Prepare send `" + route + "` as a route...")
-	command := "1:" + username + ":" + route
-	var callback = make([]byte, 512)
 
-	bs, err := conn.Write([]byte(command))
+	b, err := common.GetTransferableDataByteFromInterface(&common.TransferableString{"add_callback"}, route)
 	if err != nil {
-		return "", err
+		log.Errorf("An error occurred during get bytes from TransferableData: `%s`", err)
+		return err
 	}
+
+	bs, err := conn.Write(b)
+	if err != nil {
+		log.Errorf("An error occurred during sync callback with server: `%s`", err)
+		return err
+	}
+
 	log.Debug("`" + route + "` has been sent (" + strconv.Itoa(bs) + ") to the server...")
 
-	br, err := conn.Read(callback)
-	if err != nil {
-		return "", nil
-	}
-	log.Debug("A response received (" + strconv.Itoa(br) + ") from the server...")
-
-	return string(callback), nil
+	return nil
 }

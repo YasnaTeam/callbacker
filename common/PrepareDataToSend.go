@@ -7,7 +7,7 @@ import (
 
 func PrepareDataToSend(r *http.Request) ([]byte, error) {
 	request := GoRequestToCallbackerRequest(r)
-	marshalledRequest, err := GetTransferableDataByteFromInterface(request, "callback_forward")
+	marshalledRequest, err := GetTransferableDataByteFromInterface(&TransferableRequest{request}, "callback_forward")
 	if err != nil {
 		log.Error(err)
 	}

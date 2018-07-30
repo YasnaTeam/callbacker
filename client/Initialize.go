@@ -32,6 +32,9 @@ func Initialize(port uint, logger *logrus.Logger) {
 
 	registerUserOnServer(conn)
 
-	go callCallbackOnRecieveDataFromServer(conn)
+	// All receiving of data is handled by this function
+	go doActionOnReceivingDataFromServer(conn)
+
+	// print menu and send information to server if needed
 	getUserCommandsAndSendThemToServer(conn)
 }
