@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func getCommands(conn net.Conn) {
+func getUserCommandsAndSendThemToServer(conn net.Conn) {
 	log.Debug("Client is ready to send commands...")
 
 	var command string = ""
@@ -21,8 +21,8 @@ func getCommands(conn net.Conn) {
 
 		switch command {
 		case "a", "add":
-			route := addCommand(scanner)
-			result, err := sendCommandToServer(conn, route)
+			route := callbackCommand(scanner)
+			result, err := syncCallbackInformationWithServer(conn, route)
 			if err != nil {
 				log.Fatal("On sending commands to server, an error occurred! " + err.Error())
 			}

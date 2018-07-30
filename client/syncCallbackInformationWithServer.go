@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func sendCommandToServer(conn net.Conn, route string) (string, error) {
+func syncCallbackInformationWithServer(conn net.Conn, route string) (string, error) {
 	log.Debug("Prepare send `" + route + "` as a route...")
 	command := "1:" + username + ":" + route
 	var callback = make([]byte, 512)

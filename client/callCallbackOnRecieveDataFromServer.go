@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func doCallbackCall(conn net.Conn) {
+func callCallbackOnRecieveDataFromServer(conn net.Conn) {
 	var d []byte = make([]byte, 512)
 	n, err := conn.Read(d)
 	if err != nil {
@@ -19,5 +19,4 @@ func doCallbackCall(conn net.Conn) {
 	if err == nil {
 		fmt.Println(receivedData)
 	}
-
 }

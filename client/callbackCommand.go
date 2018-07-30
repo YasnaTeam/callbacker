@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func addCommand(scanner *bufio.Scanner) string {
+func callbackCommand(scanner *bufio.Scanner) string {
 	var cmd string = ""
 
 	fmt.Println("")
