@@ -7,7 +7,7 @@ import (
 )
 
 func forwardRequestToUser(conn net.Conn, r *http.Request) error {
-	log.Debug("Send request to user connection...")
+	log.Debug("Forward request to user connection...")
 
 	b, err := common.PrepareRequestToSend(r)
 	if err != nil {
@@ -15,10 +15,13 @@ func forwardRequestToUser(conn net.Conn, r *http.Request) error {
 		return err
 	}
 
-	if _, err := common.SendDataToConnection(conn, b); err != nil {
+	bs, err := common.SendDataToConnection(conn, b)
+	if err != nil {
 		log.Errorf("An error occurred on forwarding request to user: `%s`", err)
 		return err
 	}
 
+	log.Debugf("%d bytes as a forwarded request has been sent to user.", bs)
+	
 	return nil
 }
