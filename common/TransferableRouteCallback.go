@@ -6,8 +6,8 @@ type RouteCallback struct {
 }
 
 type TransferableRouteCallback struct {
-	Command string        `json:"command"`
-	Data    RouteCallback `json:"data"`
+	Command string         `json:"command"`
+	Data    *RouteCallback `json:"data"`
 }
 
 func (s *TransferableRouteCallback) GetType() string {
