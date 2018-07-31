@@ -15,13 +15,8 @@ func syncCallbackInformationWithServer(conn net.Conn, route string) error {
 		return err
 	}
 
-	dataLength := []byte(strconv.Itoa(len(b)))
-	_, err = conn.Write(dataLength)
-	if err != nil {
-		log.Errorf("An error occurred during send request length to server: `%s`", err)
-		return err
-	}
-	bs, err := conn.Write(b)
+	bs, err := common.SendDataToConnection(conn, b)
+
 	if err != nil {
 		log.Errorf("An error occurred during sync callback with server: `%s`", err)
 		return err
