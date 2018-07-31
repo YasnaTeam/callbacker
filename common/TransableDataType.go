@@ -11,33 +11,8 @@ type Transferable interface {
 }
 
 type TransferableData struct {
-	Type string `json:"type"`
-	Raw  json.RawMessage
-	Data interface{}
-}
-
-type TransferableString struct {
-	Data string `json:"data"`
-}
-
-func (s *TransferableString) GetType() string {
-	return "string"
-}
-
-func (s *TransferableString) GetData() interface{} {
-	return s.Data
-}
-
-type TransferableRequest struct {
-	Data *Request `json:"data"`
-}
-
-func (s *TransferableRequest) GetType() string {
-	return "request"
-}
-
-func (s *TransferableRequest) GetData() interface{} {
-	return s.Data
+	Type string      `json:"type"`
+	Data interface{} `json:"data"`
 }
 
 type TransferableError struct {
