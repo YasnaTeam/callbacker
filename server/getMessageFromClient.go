@@ -3,13 +3,25 @@ package server
 import (
 	"net"
 	"github.com/YasnaTeam/callbacker/common"
-	"fmt"
+	"encoding/binary"
 )
 
 func getMessageFromClient(conn net.Conn, domain string) {
 	for {
-		var packet []byte = make([]byte, 1024)
-		_, err := conn.Read(packet)
+		// first read packet length
+		var packetLength []byte = make([]byte, 4)
+		_, err := conn.Read(packetLength)
+		if err != nil {
+			log.Errorf("Could not read packet length, `%s`", err.Error())
+			return
+		}
+
+		// convert packet length to int
+		packetLengthInt := binary.LittleEndian.Uint32(packetLength)
+
+		// read main data
+		var packet []byte = make([]byte, packetLengthInt)
+		_, err = conn.Read(packet)
 		if err != nil {
 			conn.Close()
 			log.Warn("Could not receive packet...")
@@ -22,18 +34,19 @@ func getMessageFromClient(conn net.Conn, domain string) {
 		}
 
 		log.Debug("Received packet: " + string(packet))
-		packetStruct, err := common.GetTransferableDataFromByte(packet)
-		fmt.Println(packetStruct)
+		packetStruct, err := common.GetTransferableFromByte(packet)
 		if err != nil {
 			log.Errorf("There are some errors on receiving packet from client: `%s`", err)
 			return
 		}
 
-		switch packetStruct.Type {
+		switch packetStruct.GetCommand() {
 		case "register_user":
-			registerUserConnection(conn, packetStruct.Data.(string))
+			registerUserConnection(conn, packetStruct.GetData().(string))
 		case "add_callback":
-			registerCallback(conn, packetStruct.Data.(string), domain)
+			registerCallback(conn, packetStruct.GetData().(string), domain)
+		default:
+			log.Debugf("No type defined for %v", packetStruct.GetType())
 		}
 	}
 }
