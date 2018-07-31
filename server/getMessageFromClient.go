@@ -26,13 +26,15 @@ func getMessageFromClient(conn net.Conn, domain string) {
 			return
 		}
 
-		switch packetStruct.GetCommand() {
-		case "register_user":
-			registerUserConnection(conn, packetStruct.GetData().(string))
-		case "add_callback":
-			registerCallback(conn, packetStruct.GetData().(common.RouteCallback), domain)
+		switch packetStruct.Type {
+		case "string":
+			doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString))
+		case "route_callback":
+			doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), domain)
+		case "request":
+			doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest))
 		default:
-			log.Debugf("No type defined for %v", packetStruct.GetType())
+			log.Debugf("No type defined for %s.", packetStruct.Type)
 		}
 	}
 }
