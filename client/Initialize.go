@@ -9,7 +9,7 @@ import (
 
 var log *logrus.Logger
 var username string
-var routes storage.RouteTable
+var routes storage.RouteTable // map callback url to route
 
 func Initialize(port uint, logger *logrus.Logger) {
 	log = logger
