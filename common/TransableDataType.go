@@ -7,6 +7,7 @@ import (
 
 type Transferable interface {
 	GetType() string
+	GetCommand() string
 	GetData() interface{}
 }
 
@@ -24,39 +25,20 @@ func (e *TransferableError) Error() string {
 	return fmt.Sprintf("There is an error on %sing TrasferableData: `%s`", e.errorType, e.error)
 }
 
-func GetTransferableDataFromByte(d []byte) (*TransferableData, error) {
-	var data TransferableData
-	err := json.Unmarshal(d, &data)
-
+func GetTransferableFromByte(d []byte) (Transferable, error) {
+	var data *TransferableData = &TransferableData{}
+	err := json.Unmarshal(d, data)
 	if err != nil {
 		return nil, &TransferableError{err.Error(), "general unmarshal"}
 	}
 
-	switch data.Type {
-	case "string":
-		var tString TransferableString
-		if err := json.Unmarshal([]byte(data.Raw), &tString); err != nil {
-			return nil, &TransferableError{err.Error(), "string unmarshal"}
-		}
-		data.Data = tString.Data
-		return &data, nil
-	case "request":
-		var tRequest TransferableRequest
-		if err := json.Unmarshal([]byte(data.Raw), &tRequest); err != nil {
-			return nil, &TransferableError{err.Error(), "request unmarshal"}
-		}
-		data.Data = tRequest.Data
-		return &data, nil
-	default:
-		return nil, &TransferableError{"There is no unmarshaller present for " + data.Type, "general unmarshal"}
-	}
-
-	return &data, nil
+	return convertRawByteToTransferable(data)
 }
 
-func GetTransferableDataByteFromInterface(d Transferable, t string) ([]byte, error) {
+func GetByteFromTransferable(d Transferable) ([]byte, error) {
 	var data TransferableData = TransferableData{
 		Type: d.GetType(),
+		Data: d,
 	}
 
 	b, err := json.Marshal(data)
@@ -65,4 +47,37 @@ func GetTransferableDataByteFromInterface(d Transferable, t string) ([]byte, err
 	}
 
 	return b, nil
+}
+
+func convertRawByteToTransferable(data *TransferableData) (Transferable, error) {
+	// on unmarshalling of an interface value, go converts an interface type to a map
+	mappedValues := data.Data.(map[string]interface{})
+
+	switch data.Type {
+	case "string":
+		return fillStringTransferableFromData(mappedValues), nil
+	case "request":
+		return fillRequestTransferableFromData(mappedValues), nil
+	default:
+		return nil, &TransferableError{"There is no unmarshaller present for " + data.Type, "general unmarshal"}
+	}
+}
+
+func fillStringTransferableFromData(d map[string]interface{}) Transferable {
+	var tString TransferableString = TransferableString{}
+
+	tString.Command = d["command"].(string)
+	tString.Data = d["data"].(string)
+
+	return &tString
+}
+
+func fillRequestTransferableFromData(mappedValues map[string]interface{}) Transferable {
+	var tRequest TransferableRequest = TransferableRequest{}
+
+	request := mappedValues["data"].(Request)
+	tRequest.Data = &request
+	tRequest.Command = mappedValues["command"].(string)
+
+	return &tRequest
 }
