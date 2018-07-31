@@ -8,7 +8,7 @@ import (
 func syncCallbackInformationWithServer(conn net.Conn, route string) error {
 	log.Debug("Prepare send `" + route + "` as a route...")
 
-	b, err := common.GetByteFromTransferable(&common.TransferableRouteCallback{"add_callback", common.RouteCallback{Route: route}})
+	b, err := common.GetByteFromTransferable(&common.TransferableRouteCallback{"add_callback", &common.RouteCallback{Route: route}})
 	if err != nil {
 		log.Errorf("An error occurred during get bytes from TransferableData: `%s`", err)
 		return err
