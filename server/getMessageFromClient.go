@@ -30,7 +30,7 @@ func getMessageFromClient(conn net.Conn, domain string) {
 		case "register_user":
 			registerUserConnection(conn, packetStruct.GetData().(string))
 		case "add_callback":
-			registerCallback(conn, packetStruct.GetData().(string), domain)
+			registerCallback(conn, packetStruct.GetData().(common.RouteCallback), domain)
 		default:
 			log.Debugf("No type defined for %v", packetStruct.GetType())
 		}
