@@ -2,7 +2,7 @@ package common
 
 import "net/http"
 
-func GoRequestToCallbackerRequest(r *http.Request) *Request {
+func GetInformationOfRequest(r *http.Request) *Request {
 	var body = make([]byte, r.ContentLength)
 	r.Body.Read(body)
 	return &Request{

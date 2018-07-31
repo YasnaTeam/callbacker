@@ -6,11 +6,11 @@ import (
 )
 
 func PrepareRequestToSend(r *http.Request) ([]byte, error) {
-	request := GoRequestToCallbackerRequest(r)
-	marshalledRequest, err := GetByteFromTransferable(&TransferableRequest{"callback_forward", request})
+	request := GetInformationOfRequest(r)
+	b, err := GetByteFromTransferable(&TransferableRequest{"callback_forward", request})
 	if err != nil {
 		log.Error(err)
 	}
 
-	return marshalledRequest, err
+	return b, err
 }
