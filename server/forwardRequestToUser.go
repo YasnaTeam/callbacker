@@ -6,16 +6,19 @@ import (
 	"github.com/YasnaTeam/callbacker/common"
 )
 
-func forwardRequestToUser(conn net.Conn, r *http.Request) {
+func forwardRequestToUser(conn net.Conn, r *http.Request) error {
 	log.Debug("Send request to user connection...")
-	marshalledRequest, err := common.PrepareRequestToSend(r)
-	if err == nil {
-		n, err := conn.Write(marshalledRequest)
-		if err != nil {
-			log.Error("There are some errors on forward callback to server", err)
-			return
-		}
 
-		log.Debugf("%d bytes of request, has been forwarded to the client", n)
+	b, err := common.PrepareRequestToSend(r)
+	if err != nil {
+		log.Errorf("An error occurred during get bytes from TransferableRequest: `%s`", err)
+		return err
 	}
+
+	if _, err := common.SendDataToConnection(conn, b); err != nil {
+		log.Errorf("An error occurred on forwarding request to user: `%s`", err)
+		return err
+	}
+
+	return nil
 }
