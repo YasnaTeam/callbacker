@@ -9,12 +9,18 @@ import (
 func syncCallbackInformationWithServer(conn net.Conn, route string) error {
 	log.Debug("Prepare send `" + route + "` as a route...")
 
-	b, err := common.GetTransferableDataByteFromInterface(&common.TransferableString{"add_callback"}, route)
+	b, err := common.GetByteFromTransferable(&common.TransferableString{"add_callback", route})
 	if err != nil {
 		log.Errorf("An error occurred during get bytes from TransferableData: `%s`", err)
 		return err
 	}
 
+	dataLength := []byte(strconv.Itoa(len(b)))
+	_, err = conn.Write(dataLength)
+	if err != nil {
+		log.Errorf("An error occurred during send request length to server: `%s`", err)
+		return err
+	}
 	bs, err := conn.Write(b)
 	if err != nil {
 		log.Errorf("An error occurred during sync callback with server: `%s`", err)
