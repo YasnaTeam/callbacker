@@ -3,25 +3,11 @@ package server
 import (
 	"net"
 	"github.com/YasnaTeam/callbacker/common"
-	"encoding/binary"
 )
 
 func getMessageFromClient(conn net.Conn, domain string) {
 	for {
-		// first read packet length
-		var packetLength []byte = make([]byte, 4)
-		_, err := conn.Read(packetLength)
-		if err != nil {
-			log.Errorf("Could not read packet length, `%s`", err.Error())
-			return
-		}
-
-		// convert packet length to int
-		packetLengthInt := binary.LittleEndian.Uint32(packetLength)
-
-		// read main data
-		var packet []byte = make([]byte, packetLengthInt)
-		_, err = conn.Read(packet)
+		packet, err := common.ReceiveDataFromConnection(conn)
 		if err != nil {
 			conn.Close()
 			log.Warn("Could not receive packet...")
