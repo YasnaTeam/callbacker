@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func PrepareDataToSend(r *http.Request) ([]byte, error) {
+func PrepareRequestToSend(r *http.Request) ([]byte, error) {
 	request := GoRequestToCallbackerRequest(r)
 	marshalledRequest, err := GetByteFromTransferable(&TransferableRequest{"callback_forward", request})
 	if err != nil {

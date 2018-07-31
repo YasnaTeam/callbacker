@@ -8,7 +8,7 @@ import (
 
 func forwardRequestToUser(conn net.Conn, r *http.Request) {
 	log.Debug("Send request to user connection...")
-	marshalledRequest, err := common.PrepareDataToSend(r)
+	marshalledRequest, err := common.PrepareRequestToSend(r)
 	if err == nil {
 		n, err := conn.Write(marshalledRequest)
 		if err != nil {
