@@ -3,10 +3,10 @@ package server
 import "net"
 
 func registerUserConnection(conn net.Conn, username string) {
-	log.Debug("Trying to add `" + username + "` as a user...")
+	log.Debugf("Trying to add `%s` as a user...", username)
 	connections.Set(username, conn)
 
 	if connections.Has(username) {
-		log.Debug("`" + username + "` connection added successfully.")
+		log.Debugf("`%s` connection added successfully.", username)
 	}
 }

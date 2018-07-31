@@ -6,7 +6,7 @@ import (
 	"github.com/YasnaTeam/callbacker/common"
 )
 
-func registerCallback(conn net.Conn, rc common.RouteCallback, domain string) {
+func registerCallback(conn net.Conn, rc *common.RouteCallback, domain string) {
 	log.Debugf("Trying to add `%s` as a route...", rc.Route)
 
 	uuid := uuid2.NewV4().String()
@@ -21,7 +21,7 @@ func registerCallback(conn net.Conn, rc common.RouteCallback, domain string) {
 
 	routes.Set(uuid, username)
 
-	b, err := common.PrepareRouteCallbackToSend(rc.Route, callback)
+	b, err := common.PrepareRouteCallbackInformation(rc.Route, callback)
 	if err != nil {
 		log.Errorf("There are some errors on preparing RouteCallback data byte: `%s`.", err.Error())
 		return
