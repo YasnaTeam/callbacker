@@ -15,19 +15,21 @@ func doActionOnReceivingDataFromServer(conn net.Conn) {
 		}
 
 		log.Debug("Received packet: " + string(packet))
-		//packetStruct, err := common.GetTransferableFromByte(packet)
-		//if err != nil {
-		//	log.Errorf("There are some errors on receiving packet from server: `%s`", err)
-		//	return
-		//}
+		packetStruct, err := common.GetTransferableFromByte(packet)
+		if err != nil {
+			log.Errorf("There are some errors on receiving packet from server: `%s`", err)
+			return
+		}
 
-		//switch packetStruct.GetType() {
-		//case "string":
-		//
-		//case "request":
-		//
-		//default:
-		//	log.Errorf("No action found for type `%s`", packetStruct.GetType())
-		//}
+		switch packetStruct.Type {
+		case "string":
+			doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString))
+		case "route_callback":
+			doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), "")
+		case "request":
+			doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest))
+		default:
+			log.Debugf("No type defined on client for %s.", packetStruct.Type)
+		}
 	}
 }
