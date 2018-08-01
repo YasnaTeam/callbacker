@@ -1,36 +1,14 @@
-hash: 3f52a355351653447722f48562725474d7bed0cf690ec543e21af2e6e3ba550f
-updated: 2018-08-01T15:22:31.407848583+04:30
+hash: 69f91b07e7b5ae7262d5f0e2a695e1485b0b1c6acc91d76cbda1b360098ff79e
+updated: 2018-08-01T19:58:14.279266832+04:30
 imports:
-- name: github.com/davidlazar/go-crypto
-  version: dcfb0a7ac018a248366f96bcd8a2f8c805d7b268
-  subpackages:
-  - encoding/base32
-- name: github.com/ddliu/go-httpclient
-  version: 72917d81d0423a6235790470d15a4d099e3490f9
-- name: github.com/gorilla/context
-  version: 08b5f424b9271eedf6f9f0ce86cb9396ed337a42
+- name: github.com/gojektech/heimdall
+  version: 54d43c53c27af9aaedbc8cff538ee523a8973bda
 - name: github.com/gorilla/mux
   version: e3702bed27f0d39777b0b37b664b6280e8ef8fbf
-- name: github.com/mattn/go-isatty
-  version: 6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c
 - name: github.com/satori/go.uuid
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/sirupsen/logrus
   version: 3e01752db0189b9157070a0e1668a620f9a85da2
 - name: github.com/t-tomalak/logrus-easy-formatter
   version: ca9ce6b071ebe774296872e9dff2009b87ddcbb0
-- name: golang.org/x/crypto
-  version: c126467f60eb25f8f27e5a981f32a87e3965053f
-  subpackages:
-  - ssh/terminal
-- name: golang.org/x/sys
-  version: bd9dbc187b6e1dacfdd2722a87e83093c2d7bd6e
-  subpackages:
-  - unix
-  - windows
-- name: vuvuzela.io/alpenhorn
-  version: 80fdff195936d4b843c562b844bc5c8f0ba57d63
-  subpackages:
-  - log
-  - log/ansi
 testImports: []
