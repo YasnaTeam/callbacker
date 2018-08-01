@@ -15,5 +15,5 @@ func Initialize(address string, port uint, serverUrl string, logger *logrus.Logg
 	connections = storage.NewMemoryTable(0)
 
 	go listenAndServeClients(port, serverUrl)
-	listenAndServeCallbacks(address)
+	listenAndServeCallbacks(address, serverUrl)
 }

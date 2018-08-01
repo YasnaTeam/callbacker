@@ -6,10 +6,10 @@ import (
 	"github.com/YasnaTeam/callbacker/common"
 )
 
-func forwardRequestToUser(conn net.Conn, r *http.Request) error {
+func forwardRequestToUser(conn net.Conn, r *http.Request, domain string) error {
 	log.Debug("Forward request to user connection...")
 
-	b, err := common.PrepareRequestToSend(r)
+	b, err := common.PrepareRequestToSend(r, domain)
 	if err != nil {
 		log.Errorf("An error occurred during get bytes from TransferableRequest: `%s`", err)
 		return err
