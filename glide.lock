@@ -1,5 +1,5 @@
 hash: 69f91b07e7b5ae7262d5f0e2a695e1485b0b1c6acc91d76cbda1b360098ff79e
-updated: 2018-08-01T20:36:22.639711622+04:30
+updated: 2018-08-02T16:41:01.169612942+04:30
 imports:
 - name: github.com/davidlazar/go-crypto
   version: dcfb0a7ac018a248366f96bcd8a2f8c805d7b268
@@ -30,7 +30,7 @@ imports:
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
-  version: bd9dbc187b6e1dacfdd2722a87e83093c2d7bd6e
+  version: 3dc4335d56c789b04b0ba99b7a37249d9b614314
   subpackages:
   - unix
   - windows

@@ -1,19 +1,14 @@
 package client
 
 import (
-	"bufio"
-	"os"
-	"fmt"
 	"net"
 )
 
-func registerUserOnServer(conn net.Conn) {
-	scanner := bufio.NewScanner(os.Stdin)
-	fmt.Print("Enter your username: ")
-	scanner.Scan()
-	username = scanner.Text()
-
+func registerUserOnServer(conn net.Conn, username string) (string, error) {
 	if err := registerUserConnectionOnServer(conn, username); err != nil {
 		log.Fatal("Could not register username on server, " + err.Error())
+		return "", err
 	}
+
+	return username, nil
 }

@@ -30,7 +30,25 @@ func Initialize(port uint, logger *logrus.Logger) {
 	}
 	defer conn.Close()
 
-	registerUserOnServer(conn)
+	configuration, err := GetConfiguration()
+	if err != nil {
+		log.Errorf("There is an error on getting configuration file, `%s`.", err.Error())
+	}
+	defer configuration.Close()
+
+	if configuration.Username == "" {
+		username, err := getAndRegisterUserOnServer(conn)
+
+		if err == nil {
+			configuration.Username = username
+			if err := configuration.Save(); err != nil {
+				log.Errorf("There is an error on creating user on configurations, `%s`.", err.Error())
+			}
+		}
+	} else {
+		log.Debugf("User `%s` has been selected from configurations file.", configuration.Username)
+		registerUserOnServer(conn, configuration.Username)
+	}
 
 	// All receiving of data is handled by this function
 	go doActionOnReceivingDataFromServer(conn)
