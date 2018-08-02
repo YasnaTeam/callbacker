@@ -23,6 +23,8 @@ func getUserCommandsAndSendThemToServer(conn net.Conn) {
 		case "a", "add":
 			route := callbackCommand(scanner)
 			syncCallbackInformationWithServer(conn, route)
+		case "l", "list":
+			listUserRoutesAndCallbacksInATable()
 		default:
 			printHelp()
 		}
