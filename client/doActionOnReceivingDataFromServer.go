@@ -23,11 +23,11 @@ func doActionOnReceivingDataFromServer(conn net.Conn) {
 
 		switch packetStruct.Type {
 		case "string":
-			doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString))
+			go doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString))
 		case "route_callback":
-			doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), "")
+			go doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), "")
 		case "request":
-			doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest))
+			go doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest))
 		default:
 			log.Debugf("No type defined on client for %s.", packetStruct.Type)
 		}
