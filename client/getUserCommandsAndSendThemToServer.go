@@ -25,12 +25,13 @@ func getUserCommandsAndSendThemToServer(conn net.Conn) {
 			syncCallbackInformationWithServer(conn, route)
 		case "l", "list":
 			listUserRoutesAndCallbacksInATable()
+		case "t", "truncate":
+			truncateRouteTableAndFile()
 		default:
 			printHelp()
 		}
 
-		fmt.Println("")
-		fmt.Print("Please select a command (Press h for help): ")
+		fmt.Printf("\nPlease select a command (Press h for help): ")
 		scanner.Scan()
 		command = scanner.Text()
 	}
