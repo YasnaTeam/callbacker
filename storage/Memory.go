@@ -67,3 +67,7 @@ func (m *MemoryTable) GetKey(value interface{}) (string, error) {
 
 	return "", &RouteError{"Not key has this value."}
 }
+
+func (m *MemoryTable) All() map[string]interface{} {
+	return m.table
+}

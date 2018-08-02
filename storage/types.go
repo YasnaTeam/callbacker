@@ -19,6 +19,9 @@ type RouteTable interface {
 
 	// Return first key which has the value
 	GetKey(value interface{}) (string, error)
+
+	// Return all routes
+	All() map[string]interface{}
 }
 
 type RouteError struct {
