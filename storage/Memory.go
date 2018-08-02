@@ -71,3 +71,9 @@ func (m *MemoryTable) GetKey(value interface{}) (string, error) {
 func (m *MemoryTable) All() map[string]interface{} {
 	return m.table
 }
+
+func (m *MemoryTable) Truncate() {
+	for i, _ := range m.All() {
+		m.Unset(i)
+	}
+}

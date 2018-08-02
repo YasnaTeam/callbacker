@@ -22,6 +22,9 @@ type RouteTable interface {
 
 	// Return all routes
 	All() map[string]interface{}
+
+	// Truncate table
+	Truncate()
 }
 
 type RouteError struct {
