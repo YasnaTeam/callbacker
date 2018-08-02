@@ -6,7 +6,6 @@ import (
 )
 
 type Configuration struct {
-	Server   string       `json:"server"`
 	Username string       `json:"username"`
 	Routes   []RouteTable `json:"routes"`
 }
@@ -31,7 +30,6 @@ func (c *Configuration) AddRouteCallback(route, callback string) {
 func NewConfigurationFile() error {
 	routes := []RouteTable{}
 	configuration := &Configuration{
-		"",
 		"",
 		routes,
 	}

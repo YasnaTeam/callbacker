@@ -10,6 +10,7 @@ import (
 
 var isServer bool
 var serverAddress string
+var serverLocalAddress string
 var serverRepresentationalMainUrl string
 var serverPort uint
 var debugMode bool
@@ -21,11 +22,14 @@ func init() {
 	flag.BoolVar(&isServer, "server", false, "make instance as a server")
 	flag.BoolVar(&isServer, "s", false, "make instance as a server")
 
-	flag.StringVar(&serverAddress, "host", "127.0.0.1:1616", "set server address in [http://]address[:port] form")
-	flag.StringVar(&serverAddress, "a", "127.0.0.1:1616", "set server address in [http://]address[:port] form")
+	flag.StringVar(&serverLocalAddress, "host", "127.0.0.1:1616", "set server local address in [http://]address[:port] format")
+	flag.StringVar(&serverLocalAddress, "a", "127.0.0.1:1616", "set server local address in [http://]address[:port] format")
 
-	flag.StringVar(&serverRepresentationalMainUrl, "url", "http://localhost/callback", "A representational url which will be used to client when getting callback url")
-	flag.StringVar(&serverRepresentationalMainUrl, "u", "http://localhost/callback", "A representational url which will be used to client when getting callback url")
+	flag.StringVar(&serverAddress, "callbacker-server", "callback.site:2424", "set server local address in address:port format")
+	flag.StringVar(&serverAddress, "c", "callback.site:2424", "set server local address in address:port format")
+
+	flag.StringVar(&serverRepresentationalMainUrl, "url", "http://callback.site/callback", "A representational url which will be used to client when getting callback url")
+	flag.StringVar(&serverRepresentationalMainUrl, "u", "http://callback.site/callback", "A representational url which will be used to client when getting callback url")
 
 	flag.UintVar(&serverPort, "port", 2424, "if instance is a server, set the listening port")
 	flag.UintVar(&serverPort, "p", 2424, "if instance is a server, set the listening port")
@@ -44,9 +48,9 @@ func main() {
 
 
 	if isServer {
-		server.Initialize(serverAddress, serverPort, serverRepresentationalMainUrl, log)
+		server.Initialize(serverLocalAddress, serverPort, serverRepresentationalMainUrl, log)
 	} else {
-		client.Initialize(serverPort, log)
+		client.Initialize(serverAddress, log)
 	}
 
 	log.Info("Shutting down...")
