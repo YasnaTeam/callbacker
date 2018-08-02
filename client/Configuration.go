@@ -24,6 +24,10 @@ func (c *Configuration) Save() error {
 	return saveConfiguration(c)
 }
 
+func (c *Configuration) AddRouteCallback(route, callback string) {
+	c.Routes = append(c.Routes, RouteTable{route, callback})
+}
+
 func NewConfigurationFile() error {
 	routes := []RouteTable{}
 	configuration := &Configuration{

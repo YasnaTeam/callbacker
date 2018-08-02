@@ -10,6 +10,7 @@ import (
 var log *logrus.Logger
 var username string
 var routes storage.RouteTable // map callback url to route
+var configuration *Configuration
 
 func Initialize(port uint, logger *logrus.Logger) {
 	log = logger
@@ -30,7 +31,7 @@ func Initialize(port uint, logger *logrus.Logger) {
 	}
 	defer conn.Close()
 
-	configuration, err := GetConfiguration()
+	configuration, err = GetConfiguration()
 	if err != nil {
 		log.Errorf("There is an error on getting configuration file, `%s`.", err.Error())
 	}
@@ -48,6 +49,7 @@ func Initialize(port uint, logger *logrus.Logger) {
 	} else {
 		log.Debugf("User `%s` has been selected from configurations file.", configuration.Username)
 		registerUserOnServer(conn, configuration.Username)
+		setSavedCallbacksOnClientRouteTable();
 	}
 
 	// All receiving of data is handled by this function
