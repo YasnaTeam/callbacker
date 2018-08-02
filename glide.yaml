@@ -1,0 +1,11 @@
+package: github.com/YasnaTeam/callbacker
+import:
+- package: github.com/sirupsen/logrus
+  version: ^1.0.6
+- package: github.com/t-tomalak/logrus-easy-formatter
+- package: github.com/gorilla/mux
+  version: ^1.6.2
+- package: github.com/satori/go.uuid
+  version: ^1.2.0
+- package: github.com/gojektech/heimdall
+  version: ^4.1.0
