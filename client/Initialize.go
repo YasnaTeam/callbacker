@@ -11,7 +11,7 @@ var username string
 var routes storage.RouteTable // map callback url to route
 var configuration *Configuration
 
-func Initialize(address string, logger *logrus.Logger) {
+func Initialize(address string, logger *logrus.Logger, notification func (title, text string)) {
 	log = logger
 	log.Info("Client started...")
 
@@ -45,7 +45,7 @@ func Initialize(address string, logger *logrus.Logger) {
 	}
 
 	// All receiving of data is handled by this function
-	go doActionOnReceivingDataFromServer(conn)
+	go doActionOnReceivingDataFromServer(conn, notification)
 
 	// print menu and send information to server if needed
 	getUserCommandsAndSendThemToServer(conn)

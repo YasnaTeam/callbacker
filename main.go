@@ -15,6 +15,7 @@ var serverRepresentationalMainUrl string
 var serverPort string
 var debugMode bool
 var logLocation string
+var showNotification bool
 var log *logrus.Logger
 
 
@@ -37,6 +38,9 @@ func init() {
 	flag.BoolVar(&debugMode, "debug", false, "enable debug mode")
 	flag.BoolVar(&debugMode, "v", false, "enable debug mode")
 
+	flag.BoolVar(&showNotification, "n", false, "Show notification on client for events")
+	flag.BoolVar(&showNotification, "notification", false, "Show notification on client for events")
+
 	flag.StringVar(&logLocation, "log", "/var/log/callbacker/error.log", "set location of error log file")
 	flag.StringVar(&logLocation, "l", "/var/log/callbacker/error.log", "set location of error log file")
 }
@@ -50,7 +54,8 @@ func main() {
 	if isServer {
 		server.Initialize(serverLocalAddress, serverPort, serverRepresentationalMainUrl, log)
 	} else {
-		client.Initialize(serverAddress, log)
+		notification := client.NewNotification(showNotification, log)
+		client.Initialize(serverAddress, log, notification)
 	}
 
 	log.Info("Shutting down...")

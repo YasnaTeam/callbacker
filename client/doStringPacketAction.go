@@ -5,7 +5,7 @@ import (
 	"net"
 )
 
-func doStringPacketAction(conn net.Conn, ts *common.TransferableString) {
+func doStringPacketAction(conn net.Conn, ts *common.TransferableString, notification func (title, text string)) {
 	//data := ts.GetData().(string)
 	switch ts.GetCommand() {
 	case "register_user":

@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func doActionOnReceivingDataFromServer(conn net.Conn) {
+func doActionOnReceivingDataFromServer(conn net.Conn, notification func (title, text string)) {
 	for {
 		packet, err := common.ReceiveDataFromConnection(conn)
 		if err != nil {
@@ -23,11 +23,11 @@ func doActionOnReceivingDataFromServer(conn net.Conn) {
 
 		switch packetStruct.Type {
 		case "string":
-			go doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString))
+			go doStringPacketAction(conn, packetStruct.Data.(*common.TransferableString), notification)
 		case "route_callback":
-			go doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), "")
+			go doRouteCallbackPacketAction(conn, packetStruct.Data.(*common.TransferableRouteCallback), "", notification)
 		case "request":
-			go doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest))
+			go doRequestPacketAction(conn, packetStruct.Data.(*common.TransferableRequest), notification)
 		default:
 			log.Debugf("No type defined on client for %s.", packetStruct.Type)
 		}
