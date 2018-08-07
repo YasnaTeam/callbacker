@@ -17,10 +17,18 @@ func ReceiveDataFromConnection(conn net.Conn) ([]byte, error) {
 	packetLengthInt := binary.LittleEndian.Uint32(packetLength)
 
 	// read main data
-	var packet []byte = make([]byte, packetLengthInt)
-	_, err = conn.Read(packet)
-	if err != nil {
-		return nil, err
+	var packet []byte = make([]byte, 0, packetLengthInt)
+	var buf []byte = make([]byte, 64)
+	var sum uint32 = 0
+
+	for sum != packetLengthInt {
+		n, err := conn.Read(buf)
+		if err != nil {
+			return nil, err
+		}
+
+		sum += uint32(n)
+		packet = append(packet, buf[:n]...)
 	}
 
 	return packet, nil
