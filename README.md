@@ -46,6 +46,30 @@ then run the `server`:
 ./callbacker -v -s -u http://domain.ltd/callback
 ```
 
+
+
+#### Defining a `systemd` service for server instance
+
+For definition of a `systemd` service, you can create a file on `~/.config/systemd/user` and put this lines on it:
+
+```bash
+[Unit]
+Description=Callbacker
+After=network.target
+
+[Service]
+Type=simple
+NonBlocking=true
+
+ExecStart=/absolute/path/to/callbacker -s -u http://domain.ltd/callback
+Restart=on-failure
+RestartSec=5s
+```
+
+then reload daemons with `systemctl daemon-reload` and run the service with `systemctl start callbacker`.
+
+
+
 With `./callbacker -h` you can see all available flags.
 
 
