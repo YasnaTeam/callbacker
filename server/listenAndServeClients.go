@@ -1,12 +1,11 @@
 package server
 
 import (
-	"strconv"
 	"net"
 )
 
-func listenAndServeClients(port uint, serverUrl string) {
-	portAddress := ":" + strconv.Itoa(int(port))
+func listenAndServeClients(port string, serverUrl string) {
+	portAddress := addressAndPortGenerator(port)
 	log.Info("Server serves clients on " + portAddress)
 	ln, err := net.Listen("tcp", portAddress)
 	if err != nil {

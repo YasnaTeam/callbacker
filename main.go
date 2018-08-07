@@ -12,7 +12,7 @@ var isServer bool
 var serverAddress string
 var serverLocalAddress string
 var serverRepresentationalMainUrl string
-var serverPort uint
+var serverPort string
 var debugMode bool
 var logLocation string
 var log *logrus.Logger
@@ -31,8 +31,8 @@ func init() {
 	flag.StringVar(&serverRepresentationalMainUrl, "url", "http://callback.site/callback", "A representational url which will be used to client when getting callback url")
 	flag.StringVar(&serverRepresentationalMainUrl, "u", "http://callback.site/callback", "A representational url which will be used to client when getting callback url")
 
-	flag.UintVar(&serverPort, "port", 2424, "if instance is a server, set the listening port")
-	flag.UintVar(&serverPort, "p", 2424, "if instance is a server, set the listening port")
+	flag.StringVar(&serverPort, "port", ":2424", "if instance is a server, set the listening port in [callback.site|x.x.x.x:]port format")
+	flag.StringVar(&serverPort, "p", ":2424", "if instance is a server, set the listening port in [callback.site|x.x.x.x:]port format")
 
 	flag.BoolVar(&debugMode, "debug", false, "enable debug mode")
 	flag.BoolVar(&debugMode, "v", false, "enable debug mode")
