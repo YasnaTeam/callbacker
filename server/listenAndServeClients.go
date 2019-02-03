@@ -7,7 +7,7 @@ import (
 func listenAndServeClients(port string, serverUrl string) {
 	portAddress := addressAndPortGenerator(port)
 	log.Info("Server serves clients on " + portAddress)
-	ln, err := net.Listen("tcp", portAddress)
+	ln, err := net.Listen("tcp4", portAddress)
 	if err != nil {
 		log.Fatal("Error on connecting to clients, " + err.Error())
 	}
