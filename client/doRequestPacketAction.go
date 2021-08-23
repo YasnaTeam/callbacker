@@ -1,11 +1,12 @@
 package client
 
 import (
-	"github.com/YasnaTeam/callbacker/common"
 	"net"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
-func doRequestPacketAction(conn net.Conn, tr *common.TransferableRequest, notification func (title, text string)) {
+func doRequestPacketAction(conn net.Conn, tr *common.TransferableRequest, notification func(title, text string)) {
 	data := tr.GetData().(*common.Request)
 	switch tr.GetCommand() {
 	case "callback_forward":

@@ -1,12 +1,12 @@
 package server
 
 import (
-	"github.com/sirupsen/logrus"
 	"github.com/YasnaTeam/callbacker/storage"
+	"github.com/sirupsen/logrus"
 )
 
 var log *logrus.Logger
-var routes storage.RouteTable // map routes to users
+var routes storage.RouteTable      // map routes to users
 var connections storage.RouteTable // map users to connections
 
 func Initialize(address string, port string, serverUrl string, logger *logrus.Logger) {

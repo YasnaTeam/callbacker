@@ -1,9 +1,10 @@
 package logger
 
 import (
-	"github.com/sirupsen/logrus"
-	"os"
 	"net/http"
+	"os"
+
+	"github.com/sirupsen/logrus"
 )
 
 //var log *Logger
@@ -30,8 +31,8 @@ func New(debug bool) *logrus.Logger {
 
 func WithRequest(logger *logrus.Logger, r *http.Request) *logrus.Entry {
 	return logger.WithFields(logrus.Fields{
-		"method": r.Method,
-		"protocol": r.Proto,
+		"method":      r.Method,
+		"protocol":    r.Proto,
 		"remote_addr": r.RemoteAddr,
 	})
 }

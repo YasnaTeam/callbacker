@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/YasnaTeam/callbacker/common"
 	"net"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
 func doRouteCallbackPacketAction(conn net.Conn, rc *common.TransferableRouteCallback, domain string) {

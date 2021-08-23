@@ -1,10 +1,11 @@
 package server
 
 import (
-	"net/http"
-	"github.com/YasnaTeam/callbacker/logger"
 	"net"
+	"net/http"
 	"strings"
+
+	"github.com/YasnaTeam/callbacker/logger"
 )
 
 func callbacker(w http.ResponseWriter, r *http.Request, domain string) {
@@ -23,7 +24,7 @@ func callbacker(w http.ResponseWriter, r *http.Request, domain string) {
 
 	conn, err := connections.Get(username.(string))
 	if err != nil {
-		log.Debug("No alive connection found related to `" + username.(string) +"`.")
+		log.Debug("No alive connection found related to `" + username.(string) + "`.")
 		return
 	}
 

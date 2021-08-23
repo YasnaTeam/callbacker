@@ -1,7 +1,7 @@
 package storage
 
 type MemoryTable struct {
-	max uint
+	max   uint
 	table map[string]interface{}
 }
 

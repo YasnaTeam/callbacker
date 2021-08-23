@@ -2,8 +2,9 @@ package server
 
 import (
 	"net"
-	uuid2 "github.com/satori/go.uuid"
+
 	"github.com/YasnaTeam/callbacker/common"
+	uuid2 "github.com/satori/go.uuid"
 )
 
 func registerCallback(conn net.Conn, rc *common.RouteCallback, domain string) {

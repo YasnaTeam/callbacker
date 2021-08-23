@@ -1,8 +1,8 @@
 package common
 
 import (
-	"net"
 	"encoding/binary"
+	"net"
 )
 
 func ReceiveDataFromConnection(conn net.Conn) ([]byte, error) {

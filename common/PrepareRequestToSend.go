@@ -1,8 +1,9 @@
 package common
 
 import (
-	"vuvuzela.io/alpenhorn/log"
 	"net/http"
+
+	"vuvuzela.io/alpenhorn/log"
 )
 
 func PrepareRequestToSend(r *http.Request, domain string) ([]byte, error) {

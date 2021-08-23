@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/gorilla/mux"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func muxRouter(domain string) *mux.Router {
@@ -10,7 +11,7 @@ func muxRouter(domain string) *mux.Router {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/hello", hello)
-	r.HandleFunc("/callback/{route_token}", func (w http.ResponseWriter, r *http.Request) {
+	r.HandleFunc("/callback/{route_token}", func(w http.ResponseWriter, r *http.Request) {
 		callbacker(w, r, domain)
 	})
 

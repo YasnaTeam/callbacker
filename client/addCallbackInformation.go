@@ -1,6 +1,6 @@
 package client
 
-func addCallbackInformation(result, route string, notification func (title, text string)) {
+func addCallbackInformation(result, route string, notification func(title, text string)) {
 	routes.Set(result, route)
 	configuration.AddRouteCallback(route, result)
 

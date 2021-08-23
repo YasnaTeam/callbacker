@@ -1,8 +1,8 @@
 package server
 
 import (
-	"net/http"
 	"io"
+	"net/http"
 )
 
 func hello(w http.ResponseWriter, r *http.Request) {

@@ -1,9 +1,10 @@
 package client
 
 import (
-	"net"
-	"github.com/YasnaTeam/callbacker/common"
 	"fmt"
+	"net"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
 func callCallbackOnRecieveDataFromServer(conn net.Conn) {

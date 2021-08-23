@@ -3,6 +3,7 @@ package server
 import (
 	"net"
 	"net/http"
+
 	"github.com/YasnaTeam/callbacker/common"
 )
 
@@ -22,6 +23,6 @@ func forwardRequestToUser(conn net.Conn, r *http.Request, domain string) error {
 	}
 
 	log.Debugf("%d bytes as a forwarded request has been sent to user.", bs)
-	
+
 	return nil
 }

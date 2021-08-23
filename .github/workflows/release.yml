@@ -1,0 +1,34 @@
+# .github/workflows/release.yaml
+
+name: Build Release
+on:
+  release:
+    types: [ created ]
+
+jobs:
+  releases-matrix:
+    name: Release Go Binary
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        goos: [ linux ]
+        goarch: [ "386", arm, amd64 ]
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set APP_VERSION env
+        run: echo "APP_VERSION=$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev )" >> $GITHUB_ENV
+
+      - name: Set BUILD_TIME env
+        run: echo "BUILD_TIME=$(date --rfc-3339=seconds | sed 's/ /T/')" >> $GITHUB_ENV
+
+      - uses: wangyoucao577/go-release-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          goos: ${{ matrix.goos }}
+          goarch: ${{ matrix.goarch }}
+          goversion: "https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz"
+          project_path: "./"
+          binary_name: "callbacker"
+          extra_files: "README.md"
+          ldflags: -X "github.com/YasnaTeam/callbacker/configurator.AppVersion=${{ env.APP_VERSION }}" -X "github.com/YasnaTeam/callbacker/configurator.BuildTime=${{ env.BUILD_TIME }}" -X github.com/YasnaTeam/callbacker/configurator.GitCommit=${{ github.sha }} -s -w

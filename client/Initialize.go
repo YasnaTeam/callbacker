@@ -1,9 +1,10 @@
 package client
 
 import (
-	"github.com/sirupsen/logrus"
 	"net"
+
 	"github.com/YasnaTeam/callbacker/storage"
+	"github.com/sirupsen/logrus"
 )
 
 var log *logrus.Logger
@@ -11,7 +12,7 @@ var username string
 var routes storage.RouteTable // map callback url to route
 var configuration *Configuration
 
-func Initialize(address string, logger *logrus.Logger, notification func (title, text string)) {
+func Initialize(address string, logger *logrus.Logger, notification func(title, text string)) {
 	log = logger
 	log.Info("Client started...")
 
@@ -41,7 +42,7 @@ func Initialize(address string, logger *logrus.Logger, notification func (title,
 	} else {
 		log.Debugf("User `%s` has been selected from configurations file.", configuration.Username)
 		registerUserOnServer(conn, configuration.Username)
-		setSavedCallbacksOnClientRouteTable();
+		setSavedCallbacksOnClientRouteTable()
 	}
 
 	// All receiving of data is handled by this function

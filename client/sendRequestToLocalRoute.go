@@ -1,11 +1,12 @@
 package client
 
 import (
-	"github.com/YasnaTeam/callbacker/common"
 	"fmt"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
-func sendRequestToLocalRoute(r *common.Request, notification func (title, text string)) {
+func sendRequestToLocalRoute(r *common.Request, notification func(title, text string)) {
 	hc := NewHttpClient(r)
 	err := hc.SendRequest()
 

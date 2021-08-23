@@ -1,10 +1,11 @@
 package client
 
 import (
+	"bytes"
+	"net/http"
+
 	"github.com/YasnaTeam/callbacker/common"
 	"github.com/gojektech/heimdall/httpclient"
-	"net/http"
-	"bytes"
 )
 
 type Client struct {

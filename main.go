@@ -2,9 +2,11 @@ package main
 
 import (
 	"flag"
-	"github.com/YasnaTeam/callbacker/server"
+
 	"github.com/YasnaTeam/callbacker/client"
+	"github.com/YasnaTeam/callbacker/configurator"
 	"github.com/YasnaTeam/callbacker/logger"
+	"github.com/YasnaTeam/callbacker/server"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,7 +19,6 @@ var debugMode bool
 var logLocation string
 var showNotification bool
 var log *logrus.Logger
-
 
 func init() {
 	flag.BoolVar(&isServer, "server", false, "make instance as a server")
@@ -46,10 +47,11 @@ func init() {
 }
 
 func main() {
+	configurator.PrintBuildInformation()
+
 	flag.Parse()
 	log = logger.New(debugMode)
 	log.Debug("log module fired up!")
-
 
 	if isServer {
 		server.Initialize(serverLocalAddress, serverPort, serverRepresentationalMainUrl, log)

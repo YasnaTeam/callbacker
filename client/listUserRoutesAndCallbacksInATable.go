@@ -1,9 +1,9 @@
 package client
 
 import (
-	"text/tabwriter"
-	"os"
 	"fmt"
+	"os"
+	"text/tabwriter"
 )
 
 func listUserRoutesAndCallbacksInATable() {

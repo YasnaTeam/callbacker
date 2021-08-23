@@ -2,9 +2,9 @@ package client
 
 import (
 	"bufio"
-	"os"
 	"fmt"
 	"net"
+	"os"
 )
 
 func getAndRegisterUserOnServer(conn net.Conn) (string, error) {

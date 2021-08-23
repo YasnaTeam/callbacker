@@ -1,10 +1,10 @@
 package client
 
 import (
-	"net"
 	"bufio"
-	"os"
 	"fmt"
+	"net"
+	"os"
 )
 
 func getUserCommandsAndSendThemToServer(conn net.Conn) {

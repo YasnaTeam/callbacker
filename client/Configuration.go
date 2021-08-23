@@ -1,8 +1,8 @@
 package client
 
 import (
-	"os"
 	"encoding/json"
+	"os"
 )
 
 type Configuration struct {

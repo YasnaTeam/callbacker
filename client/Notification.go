@@ -1,9 +1,10 @@
 package client
 
 import (
-	"runtime"
-	"os/exec"
 	"fmt"
+	"os/exec"
+	"runtime"
+
 	"github.com/sirupsen/logrus"
 )
 

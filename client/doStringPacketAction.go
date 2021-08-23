@@ -1,11 +1,12 @@
 package client
 
 import (
-	"github.com/YasnaTeam/callbacker/common"
 	"net"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
-func doStringPacketAction(conn net.Conn, ts *common.TransferableString, notification func (title, text string)) {
+func doStringPacketAction(conn net.Conn, ts *common.TransferableString, notification func(title, text string)) {
 	//data := ts.GetData().(string)
 	switch ts.GetCommand() {
 	case "register_user":

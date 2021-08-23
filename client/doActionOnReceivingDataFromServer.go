@@ -2,11 +2,12 @@ package client
 
 import (
 	"net"
-	"github.com/YasnaTeam/callbacker/common"
 	"os"
+
+	"github.com/YasnaTeam/callbacker/common"
 )
 
-func doActionOnReceivingDataFromServer(conn net.Conn, notification func (title, text string)) {
+func doActionOnReceivingDataFromServer(conn net.Conn, notification func(title, text string)) {
 	for {
 		packet, err := common.ReceiveDataFromConnection(conn)
 		if err != nil {
